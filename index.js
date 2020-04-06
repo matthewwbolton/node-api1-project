@@ -68,6 +68,34 @@ server.post("/api/users", (req, res) => {
   }
 });
 
+server.delete("/api/users/:id", (req, res) => {
+  const id = Number(req.params.id);
+
+  // const deletedUser = users.filter(user => user.id === id);
+
+  if (req.body.id !== id) {
+    res
+      .status(404)
+      .json({ message: "The user with the specified ID does not exist." });
+  } else {
+    res.status(500).json({ message: "The user could not be removed." });
+  }
+});
+
+server.put("/api/users/:id", (req, res) => {
+  const id = Number(req.params.id);
+
+  const updateUser = users.find((user) => user.id === id);
+
+  if (updateUser) {
+    res.status(200).json({ updateUser });
+  } else {
+    res
+      .status(404)
+      .json({ message: "The user with the specified ID does not exist." });
+  }
+});
+
 server.listen(port, () => {
   console.log(`\n=== api on port ${port} ===\n`);
 });
